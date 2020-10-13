@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Technical Task</string>
+    <string name="skip_">Skip ></string>
+
+    <string name="wizard_title_1">Welcome to Fluxstore</string>
+    <string name="wizard_title_2">Lorconsectetur adipisicing</string>
+    <string name="wizard_desc">Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit</string>
+
+    <string name="sign_in">Sign In</string>
+</resources>
