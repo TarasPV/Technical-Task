@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,23 +63,15 @@ public class HelpWizardSwipeAdapter extends PagerAdapter {
 
         if (TextUtils.equals(tvTitle.getText(), view.getResources().getText(R.string.sign_in))) {
             tvTitle.setTextColor(view.getResources().getColor(R.color.colorGreen));
-            tvTitle.setOnClickListener(onSingInClickListener);
+            tvTitle.setEnabled(true);
         } else {
             tvTitle.setTextColor(view.getResources().getColor(R.color.colorDarkGrey));
-            tvTitle.setOnClickListener(null);
+            tvTitle.setEnabled(false);
         }
-
-
         container.addView(view, 0);
         return view;
     }
 
-    View.OnClickListener onSingInClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(context, "TODO", Toast.LENGTH_SHORT).show();
-        }
-    };
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {

@@ -5,10 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,9 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         Utils.putPrefsByKey(this, Constants.PREFS_IS_FIRST_OPEN, false);
 
-
         init();
-
     }
 
     private void init() {
@@ -75,14 +71,12 @@ public class MainActivity extends AppCompatActivity {
     public void onLinearClick(View view) {
         try {
             Drawable imgDrawable = null;
-            Bitmap imgBitmap = null;
             String mainText = null, price = null;
             LinearLayout ll = (LinearLayout) view;
             for (int i = 0; i < ll.getChildCount(); i++) {
                 if (ll.getChildAt(i) instanceof ImageView) {
                     ImageView img = (ImageView) ll.getChildAt(i);
                     imgDrawable = img.getDrawable();
-                    imgBitmap = img.getDrawingCache();
                     Log.d(TAG, "onImgClick its image: " + img.getDrawable());
                 } else if (ll.getChildAt(i) instanceof TextView) {
                     TextView tv = (TextView) ll.getChildAt(i);
@@ -132,44 +126,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
-    /*public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }*/
 
-    class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
-        Bitmap bitmap;
-
-        private BitmapWorkerTask(Bitmap bitmap) {
-            this.bitmap = bitmap;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Integer... params) {
-            addBitmapToMemoryCache("testKey", bitmap);
-            bitmap = getBitmapFromMemCache("testKey");
-
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            Log.d(TAG, "res : " + bitmap);
-        }
+    public void onBackClick(View view) {
+        startActivity(new Intent(this, WizardActivity.class));
+        finish();
     }
 
-    private LruCache<String, Bitmap> memoryCache;
-
-    public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
-        if (getBitmapFromMemCache(key) == null) {
-            memoryCache.put(key, bitmap);
-        }
-    }
-
-    public Bitmap getBitmapFromMemCache(String key) {
-        return memoryCache.get(key);
-    }
 }

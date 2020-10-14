@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "928365886263",
+    "firebase_url": "https://technical-task-ca98b.firebaseio.com",
+    "project_id": "technical-task-ca98b",
+    "storage_bucket": "technical-task-ca98b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928365886263:android:8dde0ff16d1a06165778b2",
+        "android_client_info": {
+          "package_name": "com.taras.technicaltask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928365886263-7k97p7m6m9o8o3j1otcnpdidm4edj1vs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taras.technicaltask",
+            "certificate_hash": "93a29f92e5e259cd073c5b1e7a4c04bffd87bea3"
+          }
+        },
+        {
+          "client_id": "928365886263-fhdork83minuo551drkschk17ljsqd5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBylhzW1-HuU1OZzU779mlxa98pzTH5kac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928365886263-fhdork83minuo551drkschk17ljsqd5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

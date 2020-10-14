@@ -20,6 +20,7 @@
             android:id="@+id/btnBack"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:onClick="onBackClick"
             android:layout_marginLeft="25dp"
             android:background="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
