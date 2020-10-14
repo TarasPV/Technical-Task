@@ -23,10 +23,10 @@ public class SplashActivity extends AppCompatActivity {
         boolean isFirstOpen = Utils.getPrefsBoolByKey(this, Constants.PREFS_IS_FIRST_OPEN, true);
 
         Intent intent;
-        if (false) {
-            intent = new Intent(this, MainActivity.class);
-        } else {
+        if (isFirstOpen) {
             intent = new Intent(this, WizardActivity.class);
+        } else {
+            intent = new Intent(this, MainActivity.class);
         }
         startActivity(intent);
         finish();

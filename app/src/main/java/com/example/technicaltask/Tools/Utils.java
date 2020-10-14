@@ -9,7 +9,7 @@ public class Utils {
         SharedPreferences.Editor ed = context.getSharedPreferences(Constants.PREFS_FILE_NAME,
                 Context.MODE_PRIVATE).edit();
         ed.putBoolean(key, data);
-        ed.commit();
+        ed.apply();
     }
 
     public static boolean getPrefsBoolByKey(Context context, String key, boolean defaultVal) {

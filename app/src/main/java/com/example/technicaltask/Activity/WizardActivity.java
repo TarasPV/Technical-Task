@@ -10,10 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.technicaltask.R;
-import com.example.technicaltask.Tools.Constants;
 import com.example.technicaltask.Tools.HelpWizardFragmentPage;
 import com.example.technicaltask.Tools.HelpWizardSwipeAdapter;
-import com.example.technicaltask.Tools.Utils;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -31,8 +29,6 @@ public class WizardActivity extends AppCompatActivity {
     }
 
     private void init() {
-        this.getSupportActionBar().hide();
-
         setupViewPager();
     }
 
@@ -67,7 +63,7 @@ public class WizardActivity extends AppCompatActivity {
                         swipeClose = false;
 
                     if (swipeClose)
-                        onBackPressed();
+                        startMainActivity();
 
                     if (i == fragmentPages.size() - 1) {
                         swipeClose = true;
@@ -96,13 +92,16 @@ public class WizardActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Utils.putPrefsByKey(this, Constants.PREFS_IS_FIRST_OPEN, false);
+        finish();
+    }
+
+    private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
     public void onSkipClick(View view) {
-        onBackPressed();
+        startMainActivity();
     }
 }
