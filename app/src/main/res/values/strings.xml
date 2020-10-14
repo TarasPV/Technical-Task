@@ -20,4 +20,8 @@
     <string name="category_">Category: </string>
     <string name="material_">Material: </string>
     <string name="country_">Country: </string>
+    <string name="dresses">Dresses</string>
+    <string name="search">Search</string>
+    <string name="tap_hold_the_product_to_add_to_cart"><![CDATA[Tap & hold the product to add to cart]]></string>
+    <string name="sort_by">Sort by</string>
 </resources>

@@ -27,6 +27,7 @@ import java.io.ByteArrayOutputStream;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private int BOOKSHELF_ROWS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
         Utils.putPrefsByKey(this, Constants.PREFS_IS_FIRST_OPEN, false);
 
-        int BOOKSHELF_ROWS = 5;
 
+        init();
 
-//        for (Nfce_Product nfceProduct : nfceProducts) {
+    }
+
+    private void init() {
         for (int i = 0; i < BOOKSHELF_ROWS; i++) {
             final TableLayout detailsTable = (TableLayout) findViewById(R.id.tableLayout);
             final TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.tablerow, null);
@@ -67,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             //Add row to the table
             detailsTable.addView(tableRow);
         } //End for
-
     }
 
     public void onLinearClick(View view) {
