@@ -6,10 +6,12 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -41,31 +43,98 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < BOOKSHELF_ROWS; i++) {
             final TableLayout detailsTable = (TableLayout) findViewById(R.id.tableLayout);
             final TableRow tableRow = (TableRow) getLayoutInflater().inflate(R.layout.tablerow, null);
-            TextView tvName, tvPrice, tvSalePrice;
-            ImageView img;
-            //Filling in cells
-            tvName = (TextView) tableRow.findViewById(R.id.tvLeft);
-            tvPrice = (TextView) tableRow.findViewById(R.id.tvPriceLeft);
-            tvSalePrice = (TextView) tableRow.findViewById(R.id.tvSalePriceLeft);
-            img = (ImageView) tableRow.findViewById(R.id.imgLeft);
-            img.setTag(String.valueOf(i));
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ex1));
-            tvName.setText("Cashmere Textured Dress");
-            tvSalePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
-            tvName = (TextView) tableRow.findViewById(R.id.tvRight);
-            tvPrice = (TextView) tableRow.findViewById(R.id.tvPriceRight);
-            tvSalePrice = (TextView) tableRow.findViewById(R.id.tvSalePriceRight);
-            img = (ImageView) tableRow.findViewById(R.id.imgRight);
-            img.setTag(String.valueOf(i));
-            img.setImageDrawable(getResources().getDrawable(R.drawable.ex2));
-            tvName.setText("Wool dress");
-            tvSalePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            // The data obtained for left
+            Drawable image = getResources().getDrawable(R.drawable.ex1);
+            String name = "Cashmere Textured Dress";
+            float price = 50.0f;
+            float salePrice = 100.0f;
+            int rate = 5;
+            int vote = 8;
+
+            // Filling in left cells
+            setLeftColumn(tableRow, image, name, price, salePrice, rate, vote);
 
 
-            //Add row to the table
+            // The data obtained for right
+            image = getResources().getDrawable(R.drawable.ex2);
+            name = "Wool dress";
+            rate = -1;
+            vote = 2;
+
+            // Filling in right cells
+            setRightColumn(tableRow, image, name, price, salePrice, rate, vote);
+
+
+            // Add row to the table
             detailsTable.addView(tableRow);
-        } //End for
+        }
+    }
+
+    private void setLeftColumn(TableRow tableRow, Drawable image, String name,
+                               float price, float salePrice, int rate, int vote) {
+        if (image == null || TextUtils.isEmpty(name)) {
+            LinearLayout mainLinear = (LinearLayout) tableRow.findViewById(R.id.llLeft);
+            mainLinear.setVisibility(View.GONE);
+            return;
+        }
+        TextView tvName = (TextView) tableRow.findViewById(R.id.tvLeft);
+        TextView tvPrice = (TextView) tableRow.findViewById(R.id.tvPriceLeft);
+        if (salePrice != 0.0f) {
+            TextView tvSalePrice = (TextView) tableRow.findViewById(R.id.tvSalePriceLeft);
+            tvSalePrice.setVisibility(View.VISIBLE);
+            tvSalePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            tvSalePrice.setText(String.valueOf(salePrice));
+        }
+        ImageView img = (ImageView) tableRow.findViewById(R.id.imgLeft);
+        if (rate >= 0) {
+            RatingBar rating = (RatingBar) tableRow.findViewById(R.id.ratingLeft);
+            rating.setVisibility(View.VISIBLE);
+            rating.setRating(rate);
+            if (vote > 0) {
+                TextView tvVotes = (TextView) tableRow.findViewById(R.id.tvCountVotesLeft);
+                tvVotes.setVisibility(View.VISIBLE);
+                tvVotes.setText(String.format("(%s)", vote));
+            }
+        }
+
+        tvPrice.setText(String.valueOf(price));
+        img.setImageDrawable(image);
+        tvName.setText(name);
+    }
+
+    private void setRightColumn(TableRow tableRow, Drawable image, String name,
+                                float price, float salePrice, int rate, int vote) {
+
+        if (image == null || TextUtils.isEmpty(name)) {
+            LinearLayout mainLinear = (LinearLayout) tableRow.findViewById(R.id.llRight);
+            mainLinear.setVisibility(View.GONE);
+            return;
+        }
+
+        TextView tvName = (TextView) tableRow.findViewById(R.id.tvRight);
+        TextView tvPrice = (TextView) tableRow.findViewById(R.id.tvPriceRight);
+        if (salePrice != 0.0f) {
+            TextView tvSalePrice = (TextView) tableRow.findViewById(R.id.tvSalePriceRight);
+            tvSalePrice.setVisibility(View.VISIBLE);
+            tvSalePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            tvSalePrice.setText(String.valueOf(salePrice));
+        }
+        ImageView img = (ImageView) tableRow.findViewById(R.id.imgRight);
+        if (rate >= 0) {
+            RatingBar rating = (RatingBar) tableRow.findViewById(R.id.ratingRight);
+            rating.setVisibility(View.VISIBLE);
+            rating.setRating(rate);
+            if (vote > 0) {
+                TextView tvVotes = (TextView) tableRow.findViewById(R.id.tvCountVotesRight);
+                tvVotes.setVisibility(View.VISIBLE);
+                tvVotes.setText(String.format("(%s)", vote));
+            }
+        }
+
+        tvPrice.setText(String.valueOf(price));
+        img.setImageDrawable(image);
+        tvName.setText(name);
     }
 
     public void onLinearClick(View view) {
@@ -132,4 +201,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+ /*   public void onFavoriteClick(View view) {
+    }*/
 }
