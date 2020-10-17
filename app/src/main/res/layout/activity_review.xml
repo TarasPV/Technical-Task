@@ -29,7 +29,7 @@
             <ImageView
                 android:id="@+id/imgMain"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="500dp"
                 android:layout_gravity="top"
                 android:layout_marginTop="-30dp"
                 android:layout_weight="1" />
@@ -58,6 +58,7 @@
                         android:id="@+id/tvSalePrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
                         android:text="$ 95.00"
                         android:textSize="20sp" />
 
@@ -65,7 +66,6 @@
                         android:id="@+id/tvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:text="$ 50.00"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -81,9 +81,9 @@
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:rating="4"
                         android:isIndicator="false"
                         android:numStars="5"
+                        android:rating="4"
                         android:stepSize="0.1"
                         android:theme="@style/RatingBar" />
 

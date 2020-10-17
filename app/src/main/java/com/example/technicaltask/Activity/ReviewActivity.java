@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -81,15 +82,21 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void setIntentData() {
         Intent intent = getIntent();
-        byte[] byteArray = intent.getByteArrayExtra(Constants.BUNDLE_MAIN_IMAGE);
-        String name = intent.getStringExtra(Constants.BUNDLE_NAME);
-        String price = intent.getStringExtra(Constants.BUNDLE_PRICE);
+        byte[] byteArray = intent.getByteArrayExtra(Constants.INTENT_MAIN_IMAGE);
+        String name = intent.getStringExtra(Constants.INTENT_NAME);
+        String price = intent.getStringExtra(Constants.INTENT_PRICE);
+
+        String salePrice = intent.getStringExtra(Constants.INTENT_SALE_PRICE);
+        String votes = intent.getStringExtra(Constants.INTENT_VOTES);
+        float rate = intent.getFloatExtra(Constants.INTENT_RATE, 0f);
 
         ImageView imgMain = findViewById(R.id.imgMain);
         TextView tvName = findViewById(R.id.tvName);
         TextView tvPrice = findViewById(R.id.tvPrice);
         TextView tvSalePrice = findViewById(R.id.tvSalePrice);
-        tvSalePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+
+        TextView tvCountVotes = findViewById(R.id.tvCountVotes);
+        RatingBar rating = findViewById(R.id.rating);
 
         if (byteArray != null) {
             Drawable imgDrawable = new BitmapDrawable(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
@@ -97,6 +104,21 @@ public class ReviewActivity extends AppCompatActivity {
         }
         tvName.setText(name);
         tvPrice.setText(price);
+
+        if (!TextUtils.isEmpty(salePrice)) {
+            tvSalePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            tvSalePrice.setText(salePrice);
+        } else {
+            tvSalePrice.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(votes) && rate > 0) {
+            tvCountVotes.setText(votes);
+            rating.setRating(rate);
+        } else {
+            tvCountVotes.setVisibility(View.INVISIBLE);
+            rating.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void onBackClick(View view) {

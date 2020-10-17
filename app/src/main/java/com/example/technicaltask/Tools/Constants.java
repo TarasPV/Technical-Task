@@ -5,8 +5,10 @@ public class Constants {
 
     public final static String PREFS_IS_FIRST_OPEN = "prefsisfirstopen";
 
-    public static final String BUNDLE_MAIN_IMAGE = "bundlemainimage";
-    public static final String BUNDLE_NAME = "bundlename";
-    public static final String BUNDLE_PRICE = "bundleprice";
-    public static final String BUNDLE_SALE_PRICE = "bundlesaleprice";
+    public static final String INTENT_MAIN_IMAGE = "intentmainimage";
+    public static final String INTENT_NAME = "intentname";
+    public static final String INTENT_PRICE = "intentprice";
+    public static final String INTENT_SALE_PRICE = "intentsaleprice";
+    public static final String INTENT_RATE = "intentrate";
+    public static final String INTENT_VOTES = "intentvotes";
 }
