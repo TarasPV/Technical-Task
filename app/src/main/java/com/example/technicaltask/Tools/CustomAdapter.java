@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,31 +16,40 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.technicaltask.Activity.ReviewActivity;
 import com.example.technicaltask.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter {
 
     private final String TAG = "CustomAdapter";
     private Context context;
     private LayoutInflater layoutInflater;
-    private String[] namesArr;
-    private int[] imagesArr;
-    private float[] priceArr;
-    private float[] salePriceArr;
-    private int[] ratesArr;
-    private int[] votesArr;
 
-    public CustomAdapter(Context context, String[] namesArr, int[] imagesArr,
-                         float[] priceArr, float[] salePriceArr, int[] ratesArr, int[] votesArr) {
+    private ArrayList<String> imgArr;
+    private ArrayList<String> namesArr;
+    private ArrayList<Float> priceArr;
+    private ArrayList<Float> salePriceArr;
+    private ArrayList<Integer> ratesArr;
+    private ArrayList<Integer> votesArr;
+
+    public CustomAdapter(Context context, ArrayList<String> namesArr, ArrayList<String> imgArr,
+                         ArrayList<Float> priceArr, ArrayList<Float> salePriceArr,
+                         ArrayList<Integer> ratesArr, ArrayList<Integer> votesArr) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.namesArr = namesArr;
-        this.imagesArr = imagesArr;
+        this.imgArr = imgArr;
 
         this.priceArr = priceArr;
         this.salePriceArr = salePriceArr;
@@ -47,7 +59,7 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return namesArr.length;
+        return namesArr.size();
     }
 
     @Override
@@ -75,32 +87,34 @@ public class CustomAdapter extends BaseAdapter {
         final RatingBar rating = view.findViewById(R.id.rating);
         final TextView tvCountVotes = view.findViewById(R.id.tvCountVotes);
 
-        if (i < namesArr.length)
-            tvName.setText(namesArr[i]);
+        if (i < namesArr.size())
+            tvName.setText(namesArr.get(i));
         else
             tvName.setVisibility(View.INVISIBLE);
 
-        if (i < imagesArr.length && imagesArr[i] > 0)
-            imgMain.setImageDrawable(context.getResources().getDrawable(imagesArr[i]));
+        if (i < imgArr.size() && !TextUtils.isEmpty(imgArr.get(i)))
+            getDataFromFirebaseCloud(imgArr.get(i), imgMain);
         else
             imgMain.setVisibility(View.INVISIBLE);
 
-        if (i < priceArr.length && priceArr[i] > 0)
-            tvPrice.setText(String.valueOf(priceArr[i]));
+        if (i < priceArr.size() && priceArr.get(i) > 0 && priceArr.get(i) != null)
+            tvPrice.setText(String.format("$ %s", priceArr.get(i)));
         else
             tvPrice.setVisibility(View.INVISIBLE);
 
-        if (i < salePriceArr.length && salePriceArr[i] > 0) {
+        if (i < salePriceArr.size() && salePriceArr.get(i) > 0 && salePriceArr.get(i) != null) {
             tvSalePrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-            tvSalePrice.setText(String.valueOf(salePriceArr[i]));
+            tvSalePrice.setText(String.format("$ %s", salePriceArr.get(i)));
         } else
             tvSalePrice.setVisibility(View.INVISIBLE);
 
-        if (i < ratesArr.length && i < votesArr.length && ratesArr[i] > 0 && votesArr[i] > 0) {
-            if (ratesArr[i] > 5)
-                ratesArr[i] = 5;
-            rating.setRating(ratesArr[i]);
-            tvCountVotes.setText(String.format("(%s)", votesArr[i]));
+        if (i < ratesArr.size() && i < votesArr.size()
+                && ratesArr.get(i) > 0 && votesArr.get(i) > 0
+                && ratesArr.get(i) != null && votesArr.get(i) != null) {
+            if (ratesArr.get(i) > 5)
+                ratesArr.add(i, 5);
+            rating.setRating(ratesArr.get(i));
+            tvCountVotes.setText(String.format("(%s)", votesArr.get(i)));
         } else {
             rating.setVisibility(View.INVISIBLE);
             tvCountVotes.setVisibility(View.INVISIBLE);
@@ -155,5 +169,23 @@ public class CustomAdapter extends BaseAdapter {
             width = (int) (height * bitmapRatio);
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    private void getDataFromFirebaseCloud(String path, final ImageView imgMain) {
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference gsReference = storage.getReferenceFromUrl(path);
+
+        gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context).load(uri).into(imgMain);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e(TAG, "onFailure E: " + exception);
+            }
+        });
+
     }
 }
