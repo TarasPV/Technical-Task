@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -100,7 +101,8 @@ public class ReviewActivity extends AppCompatActivity {
 
         if (byteArray != null) {
             Drawable imgDrawable = new BitmapDrawable(BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length));
-            imgMain.setBackground(imgDrawable);
+            imgMain.setImageDrawable(imgDrawable);
+            imgMain.setAdjustViewBounds(true);
         }
         tvName.setText(name);
         tvPrice.setText(price);
@@ -123,5 +125,9 @@ public class ReviewActivity extends AppCompatActivity {
 
     public void onBackClick(View view) {
         onBackPressed();
+    }
+
+    public void onAddCardClick(View view) {
+        Toast.makeText(ReviewActivity.this, "Soon to be", Toast.LENGTH_SHORT).show();
     }
 }

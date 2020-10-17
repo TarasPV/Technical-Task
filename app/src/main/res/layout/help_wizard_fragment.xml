@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorWhite"
     android:gravity="center"
     android:orientation="vertical"
@@ -12,9 +12,10 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="70dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ico_wizard_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,9 +25,9 @@
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
-        android:onClick="onSignInClick"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:onClick="onSignInClick"
         android:text="@string/wizard_title_1"
         android:textColor="@color/colorDarkGrey"
         android:textSize="24sp" />

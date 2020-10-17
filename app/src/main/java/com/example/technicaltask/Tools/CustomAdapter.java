@@ -116,8 +116,8 @@ public class CustomAdapter extends BaseAdapter {
             rating.setRating(ratesArr.get(i));
             tvCountVotes.setText(String.format("(%s)", votesArr.get(i)));
         } else {
-            rating.setVisibility(View.INVISIBLE);
-            tvCountVotes.setVisibility(View.INVISIBLE);
+            rating.setVisibility(View.GONE);
+            tvCountVotes.setVisibility(View.GONE);
         }
 
 
