@@ -178,7 +178,7 @@ public class CustomAdapter extends BaseAdapter {
         gsReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).into(imgMain);
+                Glide.with(context.getApplicationContext()).load(uri).into(imgMain);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
