@@ -10,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.technicaltask.Activity.ReviewActivity;
 import com.example.technicaltask.R;
@@ -106,7 +107,7 @@ public class CustomAdapter extends BaseAdapter {
         }
 
 
-        LinearLayout mainLinear = view.findViewById(R.id.mainLinear);
+        ConstraintLayout mainLinear = view.findViewById(R.id.mainLinear);
         mainLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
